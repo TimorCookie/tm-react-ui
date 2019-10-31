@@ -1,7 +1,7 @@
 {
   "name": "tm-react-ui",
-  "version": "1.0.0",
-  "description": "base config for webpack",
+  "version": "0.0.1",
+  "description": "基于react的ui框架",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,11 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TimorCookie/tm-react-ui.git"
+    "url": "git+https://github.com/TimorCookie/webpack4x.git"
   },
   "keywords": [
-    "ui",
-    "react"
+    "webpack"
   ],
   "author": "timokie",
   "license": "ISC",

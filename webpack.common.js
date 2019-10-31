@@ -1,15 +1,32 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const fs = require('fs');
+
+const entryPath = './src/components'
+const cModuleMap = fs.readdirSync(entryPath).reduce((prev,filename)=>{
+    prev[filename] = `${entryPath}/${filename}/index.js`;
+    console.log(prev)
+    return prev
+},{})
 
 module.exports = {
-    entry: path.join(__dirname, '/src/index.js'), // 入口文件
+    entry: {
+        index: path.join(__dirname, '/src/index.js'),
+        ...cModuleMap
+    }, // 入口文件
     output: {
-        filename: '[name].bundle.js',//打包后输出文件的文件名
+        // filename: '[name].bundle.js',//打包后输出文件的文件名
+        // path: path.join(__dirname, '/dist'),//打包后的文件存放的地方
+        // chunkFilename: '[name].bundle.js',
+        filename: '[name]/index.js',
         path: path.join(__dirname, '/dist'),//打包后的文件存放的地方
-        chunkFilename: '[name].bundle.js',
+        // output.library 和 output.libraryTarget 一起使用 对外暴露 library 及定义输出组件库格式
+        library: ['xxx-components', '[name]'], 
+        libraryTarget: 'umd',
+        publicPath: '/'
     },
    
     devtool: 'source-map', // 会生成对于调试的完整的.map文件，但同时也会减慢打包速度
@@ -53,7 +70,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, '/src/index.template.html')
         }),
-        // new CleanWebpackPlugin(),
+        new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin() // 热更新插件 
     ]
 
